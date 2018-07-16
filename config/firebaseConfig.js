@@ -1,8 +1,8 @@
 export default {
-  apiKey: "AIzaSyAUDh05aFmIKuck6mLTXGbbm35UQ4UahDc",
-  authDomain: "tsf-online.firebaseapp.com",
-  databaseURL: "https://tsf-online.firebaseio.com",
-  projectId: "tsf-online",
-  storageBucket: "tsf-online.appspot.com",
-  messagingSenderId: "72344349047"
+  apiKey: "AIzaSyBJz1iHr964K0rwgZTxyEX6sfJ0QvbaQj4",
+  authDomain: "onlinelessons-587ab.firebaseapp.com",
+  databaseURL: "https://onlinelessons-587ab.firebaseio.com",
+  projectId: "onlinelessons-587ab",
+  storageBucket: "onlinelessons-587ab.appspot.com",
+  messagingSenderId: "818886868363"
 }

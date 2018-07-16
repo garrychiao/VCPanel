@@ -1,4 +1,4 @@
-# Vuely
+# Vuely with firebase auth
 
 > A material design vuejs admin template
 
@@ -23,5 +23,8 @@ npm run unit
 # run all tests
 npm test
 ```
+# config
+copy firebase api keys to config./firebaseConfig.js
+
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
