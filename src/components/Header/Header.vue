@@ -25,6 +25,7 @@
       <v-spacer></v-spacer>
       <div class="right-nav">
         <!-- App Searchbar -->
+        <!--
         <v-btn icon @click="searchFormHanler" class="d-inline-50">
           <i class="ti-search"></i>
         </v-btn>
@@ -54,6 +55,8 @@
             </v-list-tile>
           </v-list>
         </v-menu>
+        -->
+        
         <v-menu offset-y>
           <div slot="activator" class="drop-menu">
             <img width="30px" height="30px" src="/static/img/user-7.jpg" class="rounded-circle">

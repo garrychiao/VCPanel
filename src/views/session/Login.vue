@@ -18,8 +18,8 @@
               <v-text-field label="E-mail ID" v-model="email" :rules="emailRules" required></v-text-field>
               <v-text-field label="Password" v-model="password" type="password" :rules="passwordRules" required></v-text-field>
               <v-checkbox label="Remember me" v-model="checkbox" :rules="[v => !!v || 'You must agree to continue!']" required></v-checkbox>
-              <v-btn @click="submit" block class="btn-gradient-primary">Login Now</v-btn>
-              <v-btn @click="submit" block class="btn-gradient-warning">Create Account</v-btn>
+              <v-btn @click="signIn" block class="btn-gradient-primary">Login Now</v-btn>
+              <v-btn to="/session/sign-up" block class="btn-gradient-warning">Create Account</v-btn>
             </v-form>
             <p class="text-xs-center mb-0 log-link"><router-link to="/session/login">Forgot password?</router-link></p>
           </div>
@@ -30,6 +30,9 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+import swal from 'sweetalert2'
+
 export default {
   data() {
     return {
@@ -47,8 +50,50 @@ export default {
     };
   },
   methods: {
-    submit() {
-      console.log("Login");
+    async signIn() {
+      try {
+        // since firebase will handle the user registrations, no need to pass to server
+        await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        swal(
+          'Good!',
+          'Logging in.',
+          'success'
+        )
+        this.$router.push({ path: '/' })
+      } catch (error) {
+        console.log(error)
+        var errorCode = error.code
+        var errorMessage = error.message
+        switch(errorCode) {
+          case 'auth/invalid-email':
+            swal(
+              'Oops!',
+              'Invalid email format.',
+              'error'
+            )
+            break;
+          case 'auth/wrong-password':
+            swal(
+              'Oops!',
+              'Invalid password.',
+              'error'
+            )
+            break;
+          case 'auth/user-not-found':
+            swal(
+              'Oops!',
+              'User not found.',
+              'error'
+            )
+            break;
+          default:
+            swal(
+              'Oops!',
+              errorMessage,
+              'error'
+            )
+        }
+      }
     }
   }
 };

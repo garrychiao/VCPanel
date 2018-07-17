@@ -76,5 +76,13 @@ module.exports = {
   vueDraggable: 'Vue Draggable',
   draggableResizeable: 'Draggable Resizeable',
   // 
-  userProfile: 'User Profile'
+  userProfile: 'User Profile',
+  register: 'Register',
+  login: 'Login',
+  logout: 'Logout',
+  add: 'Add',
+  delete: 'Delete',
+  create: 'Create',
+  update: 'Update',
+  edit: 'Edit'  
 }

@@ -7,24 +7,25 @@
             <a href="/" class="d-block text-xs-center"><img src="/static/img/session-logo.png" /></a>
           </div>
           <v-layout row wrap>
-            <v-flex xs12 md6>
+            <v-flex xs12 md6 offset-md3>
               <div class="session-block">
                 <div class="session-head text-xs-center">
                   <div class="div-icon mb-3">
                     <i class="ti-lock font-2x"></i>
                   </div>
-                  <h3 class="mb-4">Register To Admin</h3>
+                  <h3 class="mb-4">{{ $lang.strings.register }}</h3>
                   <p class="fs-14 px-5">Enter username and password to access control panel of Vuely.</p>
                 </div>
                 <v-form v-model="valid" class="mb-4">
                   <v-text-field label="Username" v-model="name" :rules="nameRules" :counter="10" required></v-text-field>
                   <v-text-field label="E-mail ID" v-model="email" :rules="emailRules" required></v-text-field>
                   <v-text-field label="Password" v-model="password" :rules="passwordRules" type="password" required></v-text-field>
-                  <v-btn @click="submit" block class="btn-gradient-warning">Create Account</v-btn>
+                  <v-btn @click="register" block class="btn-gradient-warning">Create Account</v-btn>
                 </v-form>
                 <p class="text-xs-center mb-0 log-link">Already have an account? <router-link to="/session/login">Log In</router-link></p>
               </div>
             </v-flex>
+            <!--
             <v-flex xs12 md5 offset-md1 d-sm-none>
               <div class="block-center">
                 <div class="mb-4 session-content">
@@ -49,6 +50,7 @@
                 </div>
               </div>
             </v-flex>
+            -->
           </v-layout>
         </v-flex>
       </v-layout>
@@ -57,6 +59,9 @@
 </template>
 
 <script>
+  import firebase from 'firebase'
+  import swal from 'sweetalert2'
+
   export default {
     data () {
       return {
@@ -80,7 +85,59 @@
     methods: {
       submit () {
         console.log("user signup")
+      },
+      async register () {
+        try {
+          // since firebase will handle the user registrations, no need to pass to server
+          await firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+          var user = firebase.auth().currentUser
+          await user.updateProfile({
+            displayName: this.displayName
+          })
+          console.log('success')
+          swal(
+            'Good!',
+            'Logging in.',
+            'success'
+          )
+          this.$router.push({path: '/'})
+          //
+        } catch (error) {
+          //
+          console.log(error)
+          switch(error.code) {
+            case 'auth/invalid-email':
+              swal(
+                'Oops!',
+                'Invalid email format.',
+                'error'
+              )
+              break;
+            case 'auth/wrong-password':
+              swal(
+                'Oops!',
+                'Invalid password.',
+                'error'
+              )
+              break;
+            case 'auth/user-not-found':
+              swal(
+                'Oops!',
+                'User not found.',
+                'error'
+              )
+              break;
+            default:
+              swal(
+                'Oops!',
+                error.message,
+                'error'
+              )
+              break;
+          }
+        }
       }
+      //
     }
   }
 </script>

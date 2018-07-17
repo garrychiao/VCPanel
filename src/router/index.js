@@ -8,6 +8,9 @@ import Full from '@/container/Full'
 import DashboardOne from '@/views/dashboard/DashboardOne'
 import DashboardTwo from '@/views/dashboard/DashboardTwo'
 
+// import firebase
+import firebase from 'firebase'
+
 // // Inbox component
 // import Inbox from '@/views/inbox/Inbox'
 
@@ -485,7 +488,8 @@ let router = new Router({
       component: SignUp,
       meta: {
         title: 'Sign Up',
-        breadcrumb: 'Session / Sign Up'
+        breadcrumb: 'Session / Sign Up',
+        entrance: true
       }
     },
     {
@@ -493,7 +497,8 @@ let router = new Router({
       component: Login,
       meta: {
         title: 'Login',
-        breadcrumb: 'Session / Login'
+        breadcrumb: 'Session / Login',
+        entrance: true
       }
     }
     // {
@@ -505,6 +510,19 @@ let router = new Router({
     //   }
     // }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  let currentUser = firebase.auth().currentUser
+  // let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  let entrance = to.matched.some(record => record.meta.entrance)
+  if (!entrance && !currentUser) {
+    next('/session/login')
+  } else if (entrance && currentUser) {
+    next('/')
+  } else {
+    next()
+  }
 })
 
 export default router

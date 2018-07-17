@@ -11,9 +11,9 @@ import VueResource from 'vue-resource'
 import VmBackTop from 'vue-multiple-back-top'
 import VueNotifications from 'vue-notifications'
 import miniToastr from 'mini-toastr'
-import AmCharts from 'amcharts3'
-import AmSerial from 'amcharts3/amcharts/serial'
-import AmAngularGauge from 'amcharts3/amcharts/gauge'
+// import AmCharts from 'amcharts3'
+// import AmSerial from 'amcharts3/amcharts/serial'
+// import AmAngularGauge from 'amcharts3/amcharts/gauge'
 import Lang from 'vuejs-localization'
 import App from './App'
 import router from './router'
@@ -52,9 +52,9 @@ const toastTypes = {
 miniToastr.init({ types: toastTypes })
 
 Vue.use(Vuetify)
-Vue.use(AmCharts)
-Vue.use(AmSerial)
-Vue.use(AmAngularGauge)
+// Vue.use(AmCharts)
+// Vue.use(AmSerial)
+// Vue.use(AmAngularGauge)
 Vue.use(Vue2Dragula)
 Vue.use(VueQuillEditor)
 Vue.use(VueResource)

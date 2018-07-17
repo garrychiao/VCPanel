@@ -77,6 +77,16 @@
                 </v-list-tile>
               </template>
             </template>
+            <template>
+              <v-list-tile @click="signOut">
+                <v-list-tile-action>
+                  <v-icon>power_settings_new</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ $lang.strings.logout }}</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </template>
             <!--
             <div class="sidebar-title px-3">
               <span>{{$lang.strings.components}}</span>
@@ -216,6 +226,9 @@
 /* eslint-disable */
 import { category1, category2, category3, category4 } from "./SidebarLinks";
 import EventBus from "../../lib/eventBus";
+import firebase from 'firebase'
+import swal from 'sweetalert2'
+
 export default {
   data() {
     return {
@@ -226,6 +239,22 @@ export default {
       backgroundFilters: null,
       expandSidebar: ""
     };
+  },
+  methods: {
+    async signOut () {
+      try {
+        await firebase.auth().signOut()
+        console.log("sign out completed");
+        swal(
+          'Good Bye!',
+          '',
+          'success'
+        )
+        this.$router.push({ path: '/session/login' });
+      } catch(error) {
+        console.log(error)
+      }
+    }
   },
   computed: {
     // change the background color of the sidebar
