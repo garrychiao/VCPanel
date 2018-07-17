@@ -84,5 +84,6 @@ module.exports = {
   delete: 'Delete',
   create: 'Create',
   update: 'Update',
-  edit: 'Edit'  
+  edit: 'Edit',
+  confirm: 'Confirm'
 }

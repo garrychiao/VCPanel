@@ -55,6 +55,7 @@ import firebase from 'firebase'
 
 // // users views
 import UserProfile from '@/views/users/UserProfile'
+import UserProfileUpdate from '@/views/users/UserProfileUpdate'
 // import UsersList from '@/views/users/UsersList'
 
 // // drag-drop components
@@ -361,6 +362,15 @@ let router = new Router({
           meta: {
             title: 'User Profile',
             breadcrumb: 'Users / User Profile'
+          }
+        },
+        {
+          path: '/users/user-profile-update',
+          component: UserProfileUpdate,
+          meta: {
+            title: 'User Profile Update',
+            breadcrumb: 'Users / User Profile Update',
+            userUpdatePage: true
           }
         }
         // {

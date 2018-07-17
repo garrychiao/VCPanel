@@ -17,6 +17,8 @@ import miniToastr from 'mini-toastr'
 import Lang from 'vuejs-localization'
 import App from './App'
 import router from './router'
+import store from '@/store/store'
+import { sync } from 'vuex-router-sync'
 
 // jvector map
 import 'jvectormap'
@@ -80,12 +82,15 @@ firestore.settings(settings)
 
 let app
 
+sync(store, router)
+
 /* eslint-disable no-new */
 firebase.auth().onAuthStateChanged(function (user) {
   if (!app) {
     app = new Vue({
       el: '#app',
       router,
+      store,
       components: { App },
       template: '<App/>'
     })

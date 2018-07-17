@@ -647,6 +647,8 @@ import Weather from "../../components/Widgets/Weather";
 import NewsLetterCampaign from "./dashboard-v1/NewsLetterCampaign";
 import CurrentVisitors from "./dashboard-v1/CurrentVisitors";
 import countTo from "vue-count-to";
+// -----------------
+import swal from 'sweetalert2'
 
 export default {
   components: {
@@ -686,8 +688,32 @@ export default {
         thumbnailWidth: 150,
         maxFilesize: 0.5,
         headers: { "My-Awesome-Header": "header value" }
-      }
+      },
+      // -------------
+      user: ''
     };
+  },
+  created () {
+    this.user = this.$store.getters.getUser
+    if (!this.user.informationFilled) {
+      swal(
+        'Information Not Updated Yet',
+        '',
+        'warning'
+      )
+      this.$router.push({path: '/users/user-profile-update'})
+    }
+  },
+  watch: {
+    // getUser: function () {
+    //   console.log()
+    // }
+  },
+  computed: {
+    // ...mapGetters({
+    //     getLang: 'getLang',
+    //     getUser: 'getUser',
+    // })
   }
 };
 </script>

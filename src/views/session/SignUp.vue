@@ -1,6 +1,19 @@
 <template>
   <div class="session-banner">
     <v-container pa-0>
+      <v-layout row wrap align-center>
+          <v-flex xs12 class="text-xs-center">
+              <v-dialog v-model="systemLoadingDialog" max-width="500px" class="mx-auto">
+                  <v-card class="text-xs-center">
+                      <v-card-text>
+                          <h3>{{ $lang.strings.system_running }}......</h3>
+                          <br>
+                          <v-progress-circular indeterminate :size="70" :width="7" color="blue"></v-progress-circular>
+                      </v-card-text>
+                  </v-card>
+              </v-dialog>
+          </v-flex>
+      </v-layout>
       <v-layout row wrap>
         <v-flex xs12 sm10 md10 mx-auto>
           <div class="mb-70">
@@ -79,7 +92,8 @@
         password: '',
         passwordRules: [
           (v) => !!v || 'Password is required'
-        ]
+        ],
+        systemLoadingDialog: false
       }
     },
     methods: {
@@ -88,13 +102,22 @@
       },
       async register () {
         try {
+          this.systemLoadingDialog = true
+          var db = firebase.firestore()
           // since firebase will handle the user registrations, no need to pass to server
           await firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
           var user = firebase.auth().currentUser
           await user.updateProfile({
-            displayName: this.displayName
+            displayName: this.name
+          })
+          await db.collection("users").add({
+            userUid: user.uid,
+            name: this.name,
+            email: this.email,
+            informationFilled: false
           })
           console.log('success')
+          this.systemLoadingDialog = false
           swal(
             'Good!',
             'Logging in.',
@@ -103,7 +126,7 @@
           this.$router.push({path: '/'})
           //
         } catch (error) {
-          //
+          this.systemLoadingDialog = false
           console.log(error)
           switch(error.code) {
             case 'auth/invalid-email':

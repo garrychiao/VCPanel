@@ -1,6 +1,19 @@
 <template>
   <div class="session-banner">
     <v-container px-0>
+      <v-layout row wrap align-center>
+          <v-flex xs12 class="text-xs-center">
+              <v-dialog v-model="systemLoadingDialog" max-width="500px" class="mx-auto">
+                  <v-card class="text-xs-center">
+                      <v-card-text>
+                          <h3>{{ $lang.strings.system_running }}......</h3>
+                          <br>
+                          <v-progress-circular indeterminate :size="70" :width="7" color="blue"></v-progress-circular>
+                      </v-card-text>
+                  </v-card>
+              </v-dialog>
+          </v-flex>
+      </v-layout>
       <v-layout row wrap>
         <v-flex xs12 sm10 md6 lg5 mx-auto>
           <div class="mb-70">
@@ -46,14 +59,25 @@ export default {
           "E-mail must be valid"
       ],
       password: "",
-      passwordRules: [v => !!v || "Password is required"]
+      passwordRules: [v => !!v || "Password is required"],
+      systemLoadingDialog: false
     };
   },
   methods: {
     async signIn() {
       try {
+        var db = firebase.firestore()
+        this.systemLoadingDialog = true
         // since firebase will handle the user registrations, no need to pass to server
         await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        var user = firebase.auth().currentUser
+        var query = await db.collection('users').where('userUid', '==', firebase.auth().currentUser.uid).get()
+        var data = query.docs[0].data()
+        data.emailVerified = user.emailVerified
+        // console.log(data)
+        this.$store.dispatch('setUser', data)
+
+        this.systemLoadingDialog = false
         swal(
           'Good!',
           'Logging in.',
@@ -61,6 +85,7 @@ export default {
         )
         this.$router.push({ path: '/' })
       } catch (error) {
+        this.systemLoadingDialog = false
         console.log(error)
         var errorCode = error.code
         var errorMessage = error.message
