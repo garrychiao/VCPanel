@@ -31,7 +31,7 @@
                       <v-btn class="red white--text" v-on:click="resetPassword()">
                         {{ $lang.user_profile_update.reset_password }}
                       </v-btn>
-                      <v-btn class="indigo white--text" id="verifyPhone" v-on:click="verifyPhone()">
+                      <v-btn class="indigo white--text" v-if="!user.phoneVerified" id="verifyPhone" v-on:click="verifyPhone()">
                         {{ $lang.user_profile_update.verify_phone }}
                       </v-btn>
                       <div id="recaptcha-container" align="center">
