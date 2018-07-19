@@ -116,7 +116,17 @@
             email: this.email,
             informationFilled: false
           })
+          
+          var user = firebase.auth().currentUser
+          var query = await db.collection('users').where('userUid', '==', firebase.auth().currentUser.uid).get()
+          var data = query.docs[0].data()
+          data.emailVerified = user.emailVerified
+          data.docId = query.docs[0].id
+          // console.log(data)
+          this.$store.dispatch('setUser', data)
+          
           console.log('success')
+          
           this.systemLoadingDialog = false
           swal(
             'Good!',

@@ -405,8 +405,10 @@ export default {
       this.systemLoadingDialog = true
       var db = firebase.firestore()
       try {
+        console.log(firebase.auth().currentUser.uid)
         var query = await db.collection('users').where('userUid', '==', firebase.auth().currentUser.uid).get()
         this.user = query.docs[0].data()
+        
         this.user.emailVerified = firebase.auth().currentUser.emailVerified
         this.user.docId = query.docs[0].id
         this.countryCode = countryCodeList[0].code

@@ -125,7 +125,7 @@ export default {
 
       try {
         var confirmationResult = await firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-        window.confirmationResult = confirmationResult
+        // window.confirmationResult = confirmationResult
         const {value: code} = await swal({
           title: 'Enter verification code',
           input: 'text',
@@ -135,20 +135,23 @@ export default {
             return !value && 'You need to write something!'
           }
         })
-
+        // console.log(this.user)
         await confirmationResult.confirm(code)
+        // console.log(this.user)
         await db.collection('users').doc(this.user.docId).update({
           phoneVerified: true
         })
+        await firebase.auth().signOut()
         swal(
           'Good !',
-          '',
+          'Please login again to activate account',
           'success'
         )
+        this.$router.push({ path: '/session/login' });
       } catch (error) {
         swal(
           'Verification Failed !',
-          '',
+          error,
           'error'
         )
         // Or, if you haven't stored the widget ID:
