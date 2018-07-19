@@ -123,5 +123,7 @@ module.exports = {
   reset_pw_email_sent: "信件已寄出，查收以重設密碼",
   plz_enter_email: "請輸入電子郵件",
   user_not_found: "未找到用戶",
-  email_error: "電子郵件格式錯誤"
+  email_error: "電子郵件格式錯誤",
+  system_running: '系統運算中',
+  cancel: '取消'
 };

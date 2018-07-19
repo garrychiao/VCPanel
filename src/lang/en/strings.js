@@ -85,5 +85,7 @@ module.exports = {
   create: 'Create',
   update: 'Update',
   edit: 'Edit',
-  confirm: 'Confirm'
+  confirm: 'Confirm',
+  system_running: 'System Running',
+  cancel: 'Cancel'
 }

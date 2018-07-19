@@ -5,13 +5,14 @@
           <v-list class="pa-0">
             <v-list-tile avatar class="sidebar-profile">
               <v-list-tile-avatar>
-                <img src="/static/img/user-11.jpg" />
+                <img src="/static/img/user.png" />
               </v-list-tile-avatar>
               <v-list-tile-content>
-                <v-list-tile-title class="fw-bold">John Leider</v-list-tile-title>
+                <v-list-tile-title class="fw-bold">{{ user.name }}</v-list-tile-title>
               </v-list-tile-content>
               <v-spacer></v-spacer>
-              <v-menu bottom left>
+
+              <!-- <v-menu bottom left>
                 <v-btn icon slot="activator" class="ma-0">
                   <v-icon>more_vert</v-icon>
                 </v-btn>
@@ -33,7 +34,7 @@
                     <v-list-tile-title>Log Out</v-list-tile-title>
                   </v-list-tile>
                 </v-list>
-              </v-menu>
+              </v-menu> -->
             </v-list-tile>
             <div class="sidebar-title px-3">
               <span>{{$lang.strings.general}}</span>
@@ -228,6 +229,7 @@ import { category1, category2, category3, category4 } from "./SidebarLinks";
 import EventBus from "../../lib/eventBus";
 import firebase from 'firebase'
 import swal from 'sweetalert2'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -237,7 +239,8 @@ export default {
       category3: category3,
       category4: category4,
       backgroundFilters: null,
-      expandSidebar: ""
+      expandSidebar: "",
+      user: ''
     };
   },
   methods: {
@@ -263,7 +266,19 @@ export default {
         this.backgroundFilters = payload;
       });
       return this.backgroundFilters;
+    },
+    ...mapGetters({
+        getLang: 'getLang',
+        getUser: 'getUser'
+    })
+  },
+  watch: {
+    getUser: function () {
+      this.user = this.$store.getters.getUser
     }
+  },
+  created() {
+    this.user = this.$store.getters.getUser
   }
 };
 </script>

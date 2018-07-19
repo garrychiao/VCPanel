@@ -33,5 +33,7 @@ module.exports = {
   passbook_photo: "存摺影本",
   upload_passbook: "上傳存摺",
   update_user_photo: "上傳大頭貼",
-  introducer_code: "推廣序號"
+  introducer_code: "推廣序號",
+  reset_password: "重設密碼",
+  verify_phone: "驗證手機號碼"
 };

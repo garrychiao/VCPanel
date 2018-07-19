@@ -112,11 +112,36 @@
                             :rules="userInfoForm.addressRules"
                             required></v-text-field>
                         </v-flex>
+                        <v-flex xs12 sm2>
+                          <v-select
+                            :label="$lang.user_profile_update.country_name"
+                            v-bind:items="countryCodeList"  
+                            v-model="countryName"
+                            @change="bindCountryCode()"
+                            ref="countryName"
+                            item-text="name"
+                            item-value="name"
+                            required
+                            bottom ></v-select>
+                        </v-flex>
+                        <v-flex xs12 sm2>
+                          <v-select
+                            :label="$lang.user_profile_update.country_code"
+                            v-bind:items="countryCodeList"  
+                            v-model="countryCode"
+                            @change="bindCountryName()"
+                            ref="countryCode"
+                            item-text="code"
+                            item-value="code"
+                            required
+                            bottom ></v-select>
+                        </v-flex>
                         <v-flex xs12 sm6>
                           <v-text-field
                             :label="$lang.user_profile_update.phone"
                             v-model="userInfoForm.phoneNumber"
                             :rules="userInfoForm.phoneNumberRules"
+                            :counter='10'
                             required></v-text-field>
                         </v-flex>
                       </v-layout>
@@ -308,6 +333,7 @@
 import firebase,{ database } from "firebase"
 import swal from "sweetalert2"
 import { mapGetters } from 'vuex'
+import { countryCodeList } from './CountryCodeList'
 
 export default {
   data() {
@@ -334,7 +360,8 @@ export default {
         ],
         phoneNumber: '',
         phoneNumberRules: [
-          v => !!v || "Phone Number is required"
+          v => !!v || "Phone Number is required",
+          v => v.length <= 10 || "Phone Number must be no more than 10 characters"
         ],
         accountReceivable: '',
         accountReceivableRules: [
@@ -354,6 +381,9 @@ export default {
         uid: firebase.auth().currentUser.uid
       },
       menu: '',
+      countryCodeList: countryCodeList,
+      countryName: '',
+      countryCode: '',
       loading: false,
       licenseTypes: [
         {text: this.$lang.user_profile_update.tw_license, value: 'TW License'},
@@ -379,6 +409,9 @@ export default {
         this.user = query.docs[0].data()
         this.user.emailVerified = firebase.auth().currentUser.emailVerified
         this.user.docId = query.docs[0].id
+        this.countryCode = countryCodeList[0].code
+        this.countryName = countryCodeList[0].name
+
         if (this.user.emailVerified) {
           this.stepperForm = 2
         }
@@ -394,6 +427,9 @@ export default {
           this.userInfoForm.licenseImageUrl_1 = this.user.licenseImage1
           this.userInfoForm.licenseImageUrl_2 = this.user.licenseImage2
           this.userInfoForm.licenseImageUrl_3 = this.user.licenseImage3
+          //
+          this.countryName = this.user.countryName
+          this.countryCode = this.user.countryCode
         }
         // this.$store.dispatch('setUser', response.data)
         // console.log(this.user)
@@ -448,7 +484,10 @@ export default {
             licenseType: this.licenseType,
             address: this.userInfoForm.address,
             phoneNumber: this.userInfoForm.phoneNumber,
-            informationFilled: true
+            informationFilled: true,
+            //
+            countryName: this.countryName,
+            countryCode: this.countryCode
           })
 
           // var file1 = this.userInfoForm.licenseImage_1
@@ -539,7 +578,7 @@ export default {
             '',
             'success'
           )
-          getUserInfo()
+          this.getUserInfo()
           this.systemLoadingDialog = false
         } else if (this.userInfoFormStatus === 'Update') {
           await userRef.update({
@@ -550,7 +589,10 @@ export default {
             licenseType: this.licenseType,
             address: this.userInfoForm.address,
             phoneNumber: this.userInfoForm.phoneNumber,
-            informationFilled: true
+            informationFilled: true,
+            //
+            countryName: this.countryName,
+            countryCode: this.countryCode
           })
 
           if (file1) {
@@ -642,7 +684,7 @@ export default {
             '',
             'success'
           )
-          getUserInfo()
+          this.getUserInfo()
           this.systemLoadingDialog = false
         }
         
@@ -829,6 +871,24 @@ export default {
             this.getUserInfo()
           })
         })
+    },
+    bindCountryCode () {
+      // console.log(this.$refs.bankName.inputValue)
+      for (var key in countryCodeList) {
+        if (countryCodeList[key].name == this.$refs.countryName.inputValue) {
+          this.countryCode = countryCodeList[key].code
+          return
+        }
+      }
+    },
+    bindCountryName () {
+      // console.log(this.$refs.bankName.inputValue)
+      for (var key in countryCodeList) {
+        if (countryCodeList[key].code == this.$refs.countryCode.inputValue) {
+          this.countryName = countryCodeList[key].name
+          return
+        }
+      }
     }
   },
   watch: {

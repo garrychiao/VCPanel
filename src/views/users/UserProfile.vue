@@ -7,12 +7,41 @@
       </div>
       <div class="profile-bottom border-bottom-light-1">
         <div class="user-image text-xs-center mb-3">
-          <img src="/static/img/user-7.jpg" class="img-responsive rounded-circle" alt="user images" />
+          <img src="/static/img/user.png" class="img-responsive rounded-circle" alt="user images" />
         </div>
         <div class="user-list-content">
           <div class="text-xs-center">
-            <h3 class="fw-bold">{{ user.name }}</h3>
-            hello
+            <h1 class="fw-bold">Hello {{ user.name }} !</h1>
+            <v-layout row wrap>
+              <v-flex xs12 sm8 offset-sm2>
+                <div class="app-card" v-if="user.informationFilled">
+                  <div class="app-card-content text-xs-left">
+                    <div class="blog-content mb-3">
+                      <h3>Email: {{ user.email }}</h3>
+                      <h3>Phone: {{ user.phoneNumber }}</h3>
+                      <h3>Gender: {{ user.gender }}</h3>
+                      <h3>Birth Day: {{ user.birthDate }}</h3>
+                      <h3>Address: {{ user.address }}</h3>
+                    </div>
+                    <div class="text-xs-center">
+                      <v-btn class="btn-warning" to="/users/user-profile-update">
+                        <span class="icon-title">{{ $lang.strings.edit }}</span>
+                        <span><i class="ti-pencil"></i></span>
+                      </v-btn>
+                      <v-btn class="red white--text" v-on:click="resetPassword()">
+                        {{ $lang.user_profile_update.reset_password }}
+                      </v-btn>
+                      <v-btn class="indigo white--text" id="verifyPhone" v-on:click="verifyPhone()">
+                        {{ $lang.user_profile_update.verify_phone }}
+                      </v-btn>
+                      <div id="recaptcha-container" align="center">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </v-flex>
+            </v-layout>
           </div>
         </div>
       </div>
@@ -52,6 +81,83 @@ export default {
     }
   },
   methods: {
+    async resetPassword () {
+      try {
+        var result = await swal({
+          title: this.$lang.alert.warning.are_you_sure,
+          text: this.$lang.alert.warning.send_pw_reset_email,
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: this.$lang.strings.confirm,
+          cancelButtonText: this.$lang.strings.cancel
+        })
+        if (result.value) {
+          var auth = firebase.auth();
+          firebase.auth().useDeviceLanguage()
+          var emailAddress = this.user.email;
+          await auth.sendPasswordResetEmail(emailAddress)
+          swal(
+            this.$lang.alert.success.title[0],
+            this.$lang.alert.success.email_sent,
+            'success'
+          )
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async verifyPhone () {
+      var db = firebase.firestore()
+      // formatting phone number
+      var formattedPhone
+      if (this.user.phoneNumber.charAt(0) === '0') {
+        var res = this.user.phoneNumber.substring(1)
+        formattedPhone = this.user.countryCode + res 
+      } else {
+        formattedPhone = this.user.countryCode + this.user.phoneNumber 
+      }
+      // console.log(formattedPhone)
+      firebase.auth().useDeviceLanguage();
+      var phoneNumber = formattedPhone;
+      var appVerifier = window.recaptchaVerifier;
+
+      try {
+        var confirmationResult = await firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+        window.confirmationResult = confirmationResult
+        const {value: code} = await swal({
+          title: 'Enter verification code',
+          input: 'text',
+          inputValue: '',
+          showCancelButton: true,
+          inputValidator: (value) => {
+            return !value && 'You need to write something!'
+          }
+        })
+
+        await confirmationResult.confirm(code)
+        await db.collection('users').doc(this.user.docId).update({
+          phoneVerified: true
+        })
+        swal(
+          'Good !',
+          '',
+          'success'
+        )
+      } catch (error) {
+        swal(
+          'Verification Failed !',
+          '',
+          'error'
+        )
+        // Or, if you haven't stored the widget ID:
+        window.recaptchaVerifier.render().then(function(widgetId) {
+          grecaptcha.reset(widgetId);
+        })
+        console.log(error)
+      }
+    },
     verifyEmail () {
       var user = firebase.auth().currentUser
       if (process.env.NODE_ENV === 'production') {
@@ -76,11 +182,13 @@ export default {
             this.$lang.alert.success.description.verf_email,
             'success'
           )
-          this.stepperForm = 2
       }).catch(function(error) {
         console.log(error)
       })
     }
+  },
+  mounted () {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
   }
 }
 </script>

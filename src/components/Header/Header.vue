@@ -57,7 +57,7 @@
         </v-menu>
         -->
         
-        <v-menu offset-y>
+        <!-- <v-menu offset-y>
           <div slot="activator" class="drop-menu">
             <img width="30px" height="30px" src="/static/img/user-7.jpg" class="rounded-circle">
             <span>Gregory A.</span>
@@ -80,7 +80,7 @@
               <v-list-tile-title>Log Out</v-list-tile-title>
             </v-list-tile>
           </v-list>
-        </v-menu>
+        </v-menu> -->
       </div>
     </v-toolbar>
     <!-- Chat Searchbar -->

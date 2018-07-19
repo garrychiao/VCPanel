@@ -16,10 +16,14 @@ module.exports = {
     receipt_added: "發票上傳成功",
     investment_plan_added: "投資計畫建立成功",
     remittance_proof_added: "匯款明細上傳成功",
-    withdraw_request_sent: "提領申請送出"
+    withdraw_request_sent: "提領申請送出",
+    email_sent: "郵件已寄出"
   },
   warning: {
     title: '注意',
-    delete_caution: "確定刪除？"
+    are_you_sure: "您確定 ?",
+    send_pw_reset_email: "寄送重設密碼郵件",
+    delete_caution: "確定刪除？",
+    plz_enter_verification_code: "輸入驗證碼 :"
   }
 };

@@ -33,5 +33,7 @@ module.exports = {
   passbook_photo: "Bankbook Photo",
   upload_passbook: "Upload Bankbook",
   update_user_photo: "Upload Photo Sticker",
-  introducer_code: "Promotion Number"
+  introducer_code: "Promotion Number",
+  reset_password: "Reset Password",
+  verify_phone: "Verify Phone"
 };
