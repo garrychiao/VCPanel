@@ -1,8 +1,8 @@
 export default {
-  apiKey: "AIzaSyBJz1iHr964K0rwgZTxyEX6sfJ0QvbaQj4",
-  authDomain: "onlinelessons-587ab.firebaseapp.com",
-  databaseURL: "https://onlinelessons-587ab.firebaseio.com",
-  projectId: "onlinelessons-587ab",
-  storageBucket: "onlinelessons-587ab.appspot.com",
-  messagingSenderId: "818886868363"
+  apiKey: "AIzaSyCYch479HJpS0oeCkVZY5jeFQBOPMEDhOI",
+    authDomain: "vcpanel-7a07d.firebaseapp.com",
+    databaseURL: "https://vcpanel-7a07d.firebaseio.com",
+    projectId: "vcpanel-7a07d",
+    storageBucket: "vcpanel-7a07d.appspot.com",
+    messagingSenderId: "227709214861"
 }

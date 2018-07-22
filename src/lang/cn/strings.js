@@ -125,5 +125,14 @@ module.exports = {
   user_not_found: "未找到用戶",
   email_error: "電子郵件格式錯誤",
   system_running: '系統運算中',
-  cancel: '取消'
+  cancel: '取消',
+  admin: "管理員",
+  superAdmin: "超級管理員",
+  address: "地址",
+  amount: "總額",
+  display_amount: "顯示金額",
+  system_amount: "系統金額",
+  add_transaction: "新增交易",
+  pending_transactions: "待驗證交易",
+  add_datetime: "建立時間"
 };

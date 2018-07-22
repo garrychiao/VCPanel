@@ -1,17 +1,9 @@
 // Sidebar Routers
-export const category1 = [
+export const categoryAdmin = [
   {
     action: 'ti-dashboard',
-    title: 'dashboard',
-    items: [
-      { title: 'dashboardv1', path: '/dashboard/dashboard-v1' },
-      { title: 'dashboardv2', path: '/dashboard/dashboard-v2' }
-    ]
-  },
-  {
-    action: 'ti-dashboard',
-    title: 'userProfile',
-    path: '/users/user-profile'
+    title: 'admin',
+    path: '/admin/admin'
   }
   // {
   //   action: 'ti-layers',
@@ -31,6 +23,14 @@ export const category1 = [
   //     { title: 'lockScreen', path: '/session/lock-screen' }
   //   ]
   // }
+]
+
+export const categorySuperAdmin = [
+  {
+    action: 'ti-dashboard',
+    title: 'superAdmin',
+    path: '/admin/super-admin'
+  }
 ]
 
 export const category2 = [

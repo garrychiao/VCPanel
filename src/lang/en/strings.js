@@ -87,5 +87,14 @@ module.exports = {
   edit: 'Edit',
   confirm: 'Confirm',
   system_running: 'System Running',
-  cancel: 'Cancel'
+  cancel: 'Cancel',
+  admin: "Admin",
+  superAdmin: "Super Admin",
+  address: "Address",
+  amount: "Amount",
+  display_amount: "Display Amount",
+  system_amount: "System Amount",
+  add_transaction: "Add Transaction",
+  pending_transactions: "Pending Transactions",
+  add_datetime: "Added Date Time"
 }

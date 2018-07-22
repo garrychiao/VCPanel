@@ -5,8 +5,11 @@ import Router from 'vue-router'
 import Full from '@/container/Full'
 
 // dashboard components
-import DashboardOne from '@/views/dashboard/DashboardOne'
-import DashboardTwo from '@/views/dashboard/DashboardTwo'
+// import DashboardOne from '@/views/dashboard/DashboardOne'
+// import DashboardTwo from '@/views/dashboard/DashboardTwo'
+import Dashboard from '@/views/admin/Dashboard'
+import Admin from '@/views/admin/Admin'
+import SuperAdmin from '@/views/admin/SuperAdmin'
 
 // import firebase
 import firebase from 'firebase'
@@ -54,8 +57,8 @@ import firebase from 'firebase'
 // import Pricing from '@/views/pages/Pricing'
 
 // // users views
-import UserProfile from '@/views/users/UserProfile'
-import UserProfileUpdate from '@/views/users/UserProfileUpdate'
+// import UserProfile from '@/views/users/UserProfile'
+// import UserProfileUpdate from '@/views/users/UserProfileUpdate'
 // import UsersList from '@/views/users/UsersList'
 
 // // drag-drop components
@@ -94,24 +97,48 @@ let router = new Router({
     {
       path: '/',
       component: Full,
-      redirect: '/dashboard/dashboard-v1',
+      redirect: '/admin/dashboard',
       children: [
         {
-          path: '/dashboard/dashboard-v1',
-          component: DashboardOne,
+          path: '/admin/dashboard',
+          component: Dashboard,
           meta: {
-            title: 'Dashboard V1',
-            breadcrumb: 'Dashboard / Dashboard V1'
+            title: 'Dashboard',
+            breadcrumb: 'Dashboard'
           }
         },
         {
-          path: '/dashboard/dashboard-v2',
-          component: DashboardTwo,
+          path: '/admin/admin',
+          component: Admin,
           meta: {
-            title: 'Dashboard V2',
-            breadcrumb: 'Dashboard / Dashboard V2'
+            title: 'Admin',
+            breadcrumb: 'Admin'
           }
         },
+        {
+          path: '/admin/super-admin',
+          component: SuperAdmin,
+          meta: {
+            title: 'SuperAdmin',
+            breadcrumb: 'SuperAdmin'
+          }
+        }
+        // {
+        //   path: '/dashboard/dashboard-v1',
+        //   component: DashboardOne,
+        //   meta: {
+        //     title: 'Dashboard V1',
+        //     breadcrumb: 'Dashboard / Dashboard V1'
+        //   }
+        // },
+        // {
+        //   path: '/dashboard/dashboard-v2',
+        //   component: DashboardTwo,
+        //   meta: {
+        //     title: 'Dashboard V2',
+        //     breadcrumb: 'Dashboard / Dashboard V2'
+        //   }
+        // },
         // {
         //   path: '/inbox',
         //   component: Inbox,
@@ -356,23 +383,23 @@ let router = new Router({
         //   }
         // },
         // // users
-        {
-          path: '/users/user-profile',
-          component: UserProfile,
-          meta: {
-            title: 'User Profile',
-            breadcrumb: 'Users / User Profile'
-          }
-        },
-        {
-          path: '/users/user-profile-update',
-          component: UserProfileUpdate,
-          meta: {
-            title: 'User Profile Update',
-            breadcrumb: 'Users / User Profile Update',
-            userUpdatePage: true
-          }
-        }
+        // {
+        //   path: '/users/user-profile',
+        //   component: UserProfile,
+        //   meta: {
+        //     title: 'User Profile',
+        //     breadcrumb: 'Users / User Profile'
+        //   }
+        // },
+        // {
+        //   path: '/users/user-profile-update',
+        //   component: UserProfileUpdate,
+        //   meta: {
+        //     title: 'User Profile Update',
+        //     breadcrumb: 'Users / User Profile Update',
+        //     userUpdatePage: true
+        //   }
+        // }
         // {
         //   path: '/users/users-list',
         //   component: UsersList,
