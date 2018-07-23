@@ -79,7 +79,7 @@ import firebase from 'firebase'
 // import Stepper from '@/views/forms/Stepper'
 
 // // session components
-import SignUp from '@/views/session/SignUp'
+// import SignUp from '@/views/session/SignUp'
 import Login from '@/views/session/Login'
 // import LockScreen from '@/views/session/LockScreen'
 
@@ -520,15 +520,15 @@ let router = new Router({
         // }
       ]
     },
-    {
-      path: '/session/sign-up',
-      component: SignUp,
-      meta: {
-        title: 'Sign Up',
-        breadcrumb: 'Session / Sign Up',
-        entrance: true
-      }
-    },
+    // {
+    //   path: '/session/sign-up',
+    //   component: SignUp,
+    //   meta: {
+    //     title: 'Sign Up',
+    //     breadcrumb: 'Session / Sign Up',
+    //     entrance: true
+    //   }
+    // },
     {
       path: '/session/login',
       component: Login,
